@@ -1,0 +1,15 @@
+{
+  "name": "noteplus",
+  "version": "1.0.0",
+  "description": "Note+ is your go-to app for hassle-free note-taking Web App. With a clean and easy-to-use interface, it's perfect for jotting down ideas, making to-do lists. Access your notes from anywhere, stay organized with categories and tags, and never miss a deadline. Note+ keeps it simple, so you can focus on what matters—your thoughts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Darsh Doshi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "mongoose": "^8.2.0"
+  }
+}
