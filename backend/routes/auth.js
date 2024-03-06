@@ -13,10 +13,12 @@ router.post('/register', [
     body("email", "Enter A Valid Email").isEmail(),
     body("password", "Password Must Be Atleast 5 Characters").isLength({ min: 5 })], async (req, res) => {
 
+        let success = false;
+
         // If There Are Errors Return Bed Request And The Errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ success, errors: errors.array() });
         }
         try {
 
@@ -33,7 +35,7 @@ router.post('/register', [
             // Check Whether The User With The Same Email Exists Already
             let user = await User.findOne({ email: req.body.email.toLowerCase() });
             if (user) {
-                return res.status(400).json({ error: "User Alerady Exists With This Email" });
+                return res.status(400).json({ success, error: "User Alerady Exists With This Email" });
             }
 
             // Creating A New User
@@ -44,7 +46,8 @@ router.post('/register', [
             }
             const JWT_SECRET = process.env.SECRET;
             const authToken = jwt.sign(data, JWT_SECRET);
-            res.json({ authToken });
+            success = true;
+            res.json({ success, authToken });
         }
         catch (err) {
             console.error(err.message);
