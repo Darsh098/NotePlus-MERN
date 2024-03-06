@@ -19,10 +19,9 @@ const Login = (props) => {
             body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
         const json = await response.json();
-        console.log(json);
         if (json.success) {
             // Save The Auth Token And Redirect
-            localStorage.setItem('Token', json.authtoken);
+            localStorage.setItem('token', json.authToken);
             navigate('/');
             props.showAlert("Logged In SuccessFully!", "success");
         }
