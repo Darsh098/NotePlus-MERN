@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // useHistory Is Changed To useNavigate In v6
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "", confirmPassword: "" });
     // let history = useHistory();
     let navigate = useNavigate();
@@ -11,7 +11,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { name, email, password, confirmPassword } = credentials;
-        if (password == confirmPassword) {
+        if (password === confirmPassword) {
             const url = `http://localhost:5000/api/auth/register`
             const response = await fetch(url, {
                 method: 'POST',
@@ -26,10 +26,14 @@ const Signup = () => {
                 // Save The Auth Token And Redirect
                 localStorage.setItem('Token', json.authtoken);
                 navigate('/');
+                props.showAlert("Account Created SuccessFully!", "success");
             }
             else {
-                alert("Invalid Credentials")
+                props.showAlert("Invalid Details", "danger");
             }
+        }
+        else {
+            props.showAlert("Password And Confirm Password Must Be Same", "danger");
         }
     }
     const onChange = (e) => {
@@ -37,8 +41,9 @@ const Signup = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className='container my-3'>
+            <h2>Sign Up</h2>
+            <form className='my-4' onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input type="text" className="form-control" id="name" name='name' value={credentials.name} aria-describedby="emailHelp" onChange={onChange} required minLength={3} />
