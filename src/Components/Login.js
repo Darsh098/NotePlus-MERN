@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // useHistory Is Changed To useNavigate In v6
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" });
     // let history = useHistory();
     let navigate = useNavigate();
@@ -24,17 +24,19 @@ const Login = () => {
             // Save The Auth Token And Redirect
             localStorage.setItem('Token', json.authtoken);
             navigate('/');
+            props.showAlert("Logged In SuccessFully!", "success");
         }
         else {
-            alert("Invalid Credentials")
+            props.showAlert("Invalid Credentials", "danger");
         }
     }
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className='container my-3'>
+            <h2>Login</h2>
+            <form className='my-4' onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
                     <input type="email" className="form-control" value={credentials.email} id="email" name='email' aria-describedby="emailHelp" onChange={onChange} />
