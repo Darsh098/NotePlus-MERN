@@ -6,6 +6,7 @@
 /backend/.env
 /.pnp
 .pnp.js
+HowToRun.txt
 .gitignore
 
 # testing
